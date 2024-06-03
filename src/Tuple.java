@@ -15,3 +15,4 @@ public class Tuple<S1, S2> {
     public S2 getSecond() {
         return second;
     }
+}

@@ -20,7 +20,7 @@ public class PuzzleController {
             Integer buttonNumber = Integer.parseInt(label);
             Tuple<Integer, Integer> coordinate = winCoordinates.get(buttonNumber);
 
-            System.out.println("Button " + label + " clicked. Coordinate: (" + coordinate.getFirst() + ", " + coordinate.getSecond() + ")");
         }));
+
     }
 }

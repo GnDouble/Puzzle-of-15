@@ -17,6 +17,7 @@ public class PuzzleView extends JFrame {
 
         JPanel tastenpanel = new JPanel(new GridLayout(4, 4, 6, 6));
         JButton b = null;
+        int i = 0;
         for (String label : lShuffle) {
             b = new JButton(label);
 
@@ -27,7 +28,12 @@ public class PuzzleView extends JFrame {
             b.setBorderPainted(false);
             buttons.add(b);
             tastenpanel.add(b);
+            PuzzleModel.currentPos(i);
+            i++;
+
         }
+        JLabel emptyLabel = new JLabel();
+        tastenpanel.add(emptyLabel);
 
         this.add(tastenpanel, BorderLayout.CENTER);
     }

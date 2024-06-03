@@ -40,4 +40,10 @@ public class PuzzleModel {
 
     }
 
+    public static Tuple<Integer, Integer> currentPos(int index) {
+        int row = (index / 4) + 1;
+        int col = (index % 4) + 1;
+        return new Tuple<>(row, col);
+    }
+
 }
