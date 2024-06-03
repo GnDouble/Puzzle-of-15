@@ -13,9 +13,9 @@ public class PuzzleView extends JFrame {
         this.setDefaultCloseOperation(EXIT_ON_CLOSE);
 
         JPanel tastenpanel = new JPanel(new GridLayout(4, 4, 1, 1));
-        String[] intArray = {"1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13", "15", "14"};
+        String[] intArray = { "1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13", "15", "14" };
 
-        for (int i = 0; i < 16; i++) {
+        for (int i = 0; i <intArray.length; i++) {
             if (i < intArray.length) {
                 JButton b = new JButton(intArray[i]);
                 b.setFont(FONT);
@@ -42,7 +42,13 @@ public class PuzzleView extends JFrame {
 
         this.add(tastenpanel, BorderLayout.CENTER);
     }
-    public List<JButton> getButtons() { return buttons; }
 
+    public List<JButton> getButtons() {
+        return buttons;
+    }
+
+    // public void show(PuzzleModel m) {
+    //     this.display.setText(m.toString());
+    // }
 
 }
