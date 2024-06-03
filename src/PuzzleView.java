@@ -21,7 +21,8 @@ public class PuzzleView extends JFrame {
             b = new JButton(label);
 
             b.setFont(FONT);
-            b.setForeground(new Color(212, 175, 55));
+            //b.setForeground(new Color(212, 175, 55));
+            b.setForeground(Color.RED);
 
             b.setBorderPainted(false);
             buttons.add(b);
