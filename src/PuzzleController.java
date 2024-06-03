@@ -10,15 +10,7 @@ public class PuzzleController {
     }
 
     public void handleEvents() {
-        this.pV.getButtons().forEach(b -> b.addActionListener(ev -> {
-            String label = ((JButton) ev.getSource()).getText();
-            if ("123456789101112131415".contains(label)){
-                Integer pos = m.getPos();
-            }
 
-            pV.show(pM);
-        }));
-        
         
     }
 }

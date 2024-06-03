@@ -4,40 +4,28 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class PuzzleView extends JFrame {
+    private PuzzleModel m;
     private static final Font FONT = new Font("Eurostile", Font.BOLD, 28);
     private List<JButton> buttons = new ArrayList<>();
+    private List<String> lShuffle = PuzzleModel.numShuffle();
 
-    public PuzzleView() {
+    public PuzzleView(PuzzleModel e) {
+
         super("Puzzle Spiel");
-        this.setSize(350, 400);
+        this.setSize(600, 600);
         this.setDefaultCloseOperation(EXIT_ON_CLOSE);
 
-        JPanel tastenpanel = new JPanel(new GridLayout(4, 4, 1, 1));
-        String[] intArray = { "1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13", "15", "14" };
+        JPanel tastenpanel = new JPanel(new GridLayout(4, 4, 6, 6));
+        JButton b = null;
+        for (String label : lShuffle) {
+            b = new JButton(label);
 
-        for (int i = 0; i <intArray.length; i++) {
-            if (i < intArray.length) {
-                JButton b = new JButton(intArray[i]);
-                b.setFont(FONT);
-                b.setForeground(new Color(212, 175, 55));
+            b.setFont(FONT);
+            b.setForeground(new Color(212, 175, 55));
 
-                int row = i / 4;
-                int col = i % 4;
-
-                if ((row + col) % 2 == 0) {
-                    b.setBackground(Color.RED);
-                } else {
-                    b.setBackground(Color.WHITE);
-                }
-
-                b.setOpaque(true);
-                b.setBorderPainted(false);
-                buttons.add(b);
-                tastenpanel.add(b);
-            } else {
-                JLabel emptyLabel = new JLabel();
-                tastenpanel.add(emptyLabel);
-            }
+            b.setBorderPainted(false);
+            buttons.add(b);
+            tastenpanel.add(b);
         }
 
         this.add(tastenpanel, BorderLayout.CENTER);
@@ -48,7 +36,7 @@ public class PuzzleView extends JFrame {
     }
 
     // public void show(PuzzleModel m) {
-    //     this.display.setText(m.toString());
+    // this.display.setText(m.toString());
     // }
 
 }

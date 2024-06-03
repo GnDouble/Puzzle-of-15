@@ -1,8 +1,8 @@
 public class Main {
     public static void main(String[] args) {
-        //Calculator model = new Calculator();
-        PuzzleView view = new PuzzleView();
-       // CalcControler controler = new CalcControler(model, view);
+        PuzzleModel model = new PuzzleModel();
+        PuzzleView view = new PuzzleView(model);
+        PuzzleController controller = new PuzzleController(model, view);
        // controler.handleEvents();
         view.setVisible(true);
     }
