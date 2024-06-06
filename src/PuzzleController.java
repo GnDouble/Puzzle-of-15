@@ -26,9 +26,13 @@ public class PuzzleController {
                         }
                         System.out.println("Button pressed: " + label + " at coordinate: " + currentPosition);
                         System.out.println("Empty cell at coordinate: " + emptyPosition);
+            
                     });
                 
             }
         }
     }
+
+    
+    
 }
