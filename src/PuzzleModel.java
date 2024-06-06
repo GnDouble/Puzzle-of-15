@@ -136,4 +136,36 @@ public class PuzzleModel {
         return (inversions % 2 == 0) == (emptyRow % 2 != 0);
     }
 
+
+    public boolean checkWin() {
+        JButton[][] buttons = getButtons();
+        Map<Integer, Tuple<Integer, Integer>> winCoords = getWinCoordinates();
+
+        // Iterate over each button on the puzzle board
+        for (int row = 0; row < buttons.length; row++) {
+            for (int col = 0; col < buttons[row].length; col++) {
+                JButton button = buttons[row][col];
+
+                int currentValue;
+                try {
+                    currentValue = Integer.parseInt(button.getText());
+                } catch (NumberFormatException e) {
+                    // If the button is empty, continue to the next button
+                    continue;
+                }
+
+                Tuple<Integer, Integer> winPos = winCoords.get(currentValue);
+                
+                if (winPos != null && winPos.getFirst() == row && winPos.getSecond() == col) {
+                    // If the button is in its winning position, continue to the next button
+                    continue;
+                } else {
+                    return false;
+                }
+            }
+        }
+
+        return true;
+    }
+
 }

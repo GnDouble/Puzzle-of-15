@@ -8,6 +8,7 @@ public class PuzzleView extends JFrame {
     private JTextField display;
     private JButton restartButton;
     private JPanel tastenpanel;
+    private JLabel winImageLabel;
 
     public PuzzleView(PuzzleModel model) {
         super("Puzzle Spiel");
@@ -30,6 +31,9 @@ public class PuzzleView extends JFrame {
         JPanel bottomPanel = new JPanel(new BorderLayout());
         bottomPanel.add(display, BorderLayout.CENTER);
         bottomPanel.add(restartButton, BorderLayout.EAST);
+
+        winImageLabel = new JLabel(); 
+        bottomPanel.add(winImageLabel, BorderLayout.NORTH); // Add winImageLabel to bottomPanel
 
         this.add(tastenpanel, BorderLayout.CENTER);
         this.add(bottomPanel, BorderLayout.SOUTH);
@@ -68,14 +72,12 @@ public class PuzzleView extends JFrame {
         initializeButtons();
         JButton[][] buttons = model.getButtons();
 
-        // Get the winning coordinates from the model
         Map<Integer, Tuple<Integer, Integer>> winCoords = model.getWinCoordinates();
 
         for (int row = 0; row < buttons.length; row++) {
             for (int col = 0; col < buttons[row].length; col++) {
                 JButton button = buttons[row][col];
 
-                // Get the value of the current button
                 int currentValue;
                 try {
                     currentValue = Integer.parseInt(button.getText());
@@ -95,10 +97,18 @@ public class PuzzleView extends JFrame {
         }
 
         display.setText("Moves: " + model.getMoves()); // Update Display for Moves
-        
+
+        if(model.checkWin()) {
+            ImageIcon winImageIcon = new ImageIcon("/Users/mgenius/VS Proj/GUI Neu/PuzzleGame/src/image/gettyimages-1255091358-2048x2048 2.jpg"); 
+            winImageLabel.setIcon(winImageIcon);
+        }
     }
 
     public JButton getRestartButton() {
         return restartButton;
+    }
+
+    public JLabel getWinImageLabel() {
+        return winImageLabel;
     }
 }
