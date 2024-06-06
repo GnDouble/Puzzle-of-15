@@ -1,18 +1,17 @@
-
 public class Tuple<S1, S2> {
-    private final S1 first;
-    private final S2 second;
+    private final int first;
+    private final int second;
 
-    public Tuple(S1 first, S2 second) {
+    public Tuple(int first, int second) {
         this.first = first;
         this.second = second;
     }
 
-    public S1 getFirst() {
+    public int getFirst() {
         return first;
     }
 
-    public S2 getSecond() {
+    public int getSecond() {
         return second;
     }
 

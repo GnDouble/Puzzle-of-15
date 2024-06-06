@@ -7,7 +7,7 @@ import javax.swing.JButton;
 public class PuzzleModel {
     private List<String> lShuffle;
     private JButton[][] buttons;
-    private Tuple<Integer, Integer> emptyCell;
+    private Tuple emptyCell;
 
     public PuzzleModel() {
         lShuffle = numShuffle();
@@ -32,7 +32,7 @@ public class PuzzleModel {
         for (int row = 0; row < buttons.length; row++) {
             for (int col = 0; col < buttons[row].length; col++) {
                 if (buttons[row][col].getText().isEmpty()) {
-                    emptyCell = new Tuple<>(row, col);
+                    emptyCell = new Tuple(row, col);
                     return;
                 }
             }
@@ -43,7 +43,7 @@ public class PuzzleModel {
         return buttons;
     }
 
-    public Tuple<Integer, Integer> getEmptyCellPosition() {
+    public Tuple getEmptyCellPosition() {
         return emptyCell;
     }
 
@@ -57,7 +57,7 @@ public class PuzzleModel {
         return numsList;
     }
 
-    public void swapWithEmptyCell(Tuple<Integer, Integer> currentPosition) {
+    public void swapWithEmptyCell(Tuple currentPosition) {
         int currentRow = currentPosition.getFirst();
         int currentCol = currentPosition.getSecond();
 
@@ -70,10 +70,10 @@ public class PuzzleModel {
         buttons[emptyRow][emptyCol].setText(tempText);
 
         // Update the empty cell position
-        emptyCell = new Tuple<>(currentRow, currentCol);
+        emptyCell = currentPosition;
     }
 
-    public static boolean validSwap(Tuple<Integer, Integer> pos1, Tuple<Integer, Integer> pos2) {
+    public static boolean validSwap(Tuple pos1, Tuple pos2) {
         int row1 = pos1.getFirst();
         int col1 = pos1.getSecond();
         int row2 = pos2.getFirst();
@@ -82,4 +82,9 @@ public class PuzzleModel {
         return (Math.abs(row1 - row2) == 1 && col1 == col2) ||
                (Math.abs(col1 - col2) == 1 && row1 == row2);
     }
+
+    
 }
+
+
+
