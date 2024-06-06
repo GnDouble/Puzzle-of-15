@@ -1,4 +1,3 @@
-// PuzzleController.java
 import java.awt.event.ActionEvent;
 import javax.swing.*;
 
@@ -10,7 +9,6 @@ public class PuzzleController {
         this.model = model;
         this.view = view;
         view.updateView();
-        
         handleEvents();
     }
 
@@ -35,11 +33,13 @@ public class PuzzleController {
                     System.out.println("Button pressed: " + label + " at coordinate: " + currentPosition); // for debug
                     System.out.println("Empty cell at coordinate: " + emptyPosition);
                 });
-            
             }
         }
-        //view.getRestartButton().addActionListener(this::model.restartGame();
-    }
 
-    
+        view.getRestartButton().addActionListener(ev -> {
+            model.restartGame();
+            handleEvents(); // Reattach listeners to the new buttons
+            view.updateView();
+        });
+    }
 }

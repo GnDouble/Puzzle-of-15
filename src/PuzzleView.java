@@ -1,14 +1,13 @@
 import javax.swing.*;
 import java.awt.*;
 import java.util.Map;
-import java.awt.event.ActionListener; 
-
 
 public class PuzzleView extends JFrame {
     private PuzzleModel model;
     private static final Font FONT = new Font("Eurostile", Font.BOLD, 28);
     private JTextField display;
     private JButton restartButton;
+    private JPanel tastenpanel;
 
     public PuzzleView(PuzzleModel model) {
         super("Puzzle Spiel");
@@ -21,17 +20,8 @@ public class PuzzleView extends JFrame {
         display.setText("Moves: " + model.getMoves()); // create Display for Moves BorderLayout.South
         display.setForeground(Color.BLACK);
 
-        JPanel tastenpanel = new JPanel(new GridLayout(4, 4, 6, 6));
-        JButton[][] buttons = model.getButtons();
-
-        // Initialize buttons
-        for (JButton[] buttonRow : buttons) {
-            for (JButton b : buttonRow) {
-                b.setFont(FONT);
-                b.setForeground(Color.RED);
-                tastenpanel.add(b);
-            }
-        }
+        tastenpanel = new JPanel(new GridLayout(4, 4, 6, 6));
+        initializeButtons();
 
         restartButton = new JButton("Restart");
         restartButton.setFont(FONT);
@@ -45,7 +35,21 @@ public class PuzzleView extends JFrame {
         this.add(bottomPanel, BorderLayout.SOUTH);
     }
 
-    
+    private void initializeButtons() {
+        tastenpanel.removeAll();
+        JButton[][] buttons = model.getButtons();
+
+        // Initialize buttons
+        for (JButton[] buttonRow : buttons) {
+            for (JButton b : buttonRow) {
+                b.setFont(FONT);
+                b.setForeground(Color.RED);
+                tastenpanel.add(b);
+            }
+        }
+        tastenpanel.revalidate();
+        tastenpanel.repaint();
+    }
 
     // get current Button Positions
     public Tuple<Integer, Integer> getButtonPosition(String label) {
@@ -61,6 +65,7 @@ public class PuzzleView extends JFrame {
     }
 
     public void updateView() {
+        initializeButtons();
         JButton[][] buttons = model.getButtons();
 
         // Get the winning coordinates from the model
@@ -89,8 +94,10 @@ public class PuzzleView extends JFrame {
             }
         }
 
-        display.setText("Moves: " + model.getMoves()); // Update Display for Movesa
+        display.setText("Moves: " + model.getMoves()); // Update Display for Moves
+        
     }
+
     public JButton getRestartButton() {
         return restartButton;
     }
