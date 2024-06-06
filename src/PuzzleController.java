@@ -1,4 +1,4 @@
-import java.awt.event.ActionEvent;
+
 import javax.swing.*;
 
 public class PuzzleController {
@@ -38,7 +38,6 @@ public class PuzzleController {
 
         view.getRestartButton().addActionListener(ev -> {
             model.restartGame();
-            handleEvents(); // Reattach listeners to the new buttons
             view.updateView();
         });
     }

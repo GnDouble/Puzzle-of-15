@@ -28,7 +28,11 @@ public class PuzzleModel {
         moves = 0;
     }
 
-    private void initializeButtons() {
+    public void initializeButtons() {
+        do {
+            lShuffle = numShuffle();
+        } while (!isSolvable(lShuffle));
+
         int i = 0;
         for (int row = 0; row < 4; row++) {
             for (int col = 0; col < 4; col++) {
@@ -109,4 +113,27 @@ public class PuzzleModel {
         winCoords.put(16, new Tuple<>(3, 3));
         return winCoords;
     }
+
+    public static boolean isSolvable(List<String> puzzle) {
+        int inversions = 0;
+        int emptyRow = -1;
+
+        for (int i = 0; i < puzzle.size(); i++) {
+            if (puzzle.get(i).isEmpty()) {
+                emptyRow = i / 4;
+                continue;
+            }
+
+            for (int j = i + 1; j < puzzle.size(); j++) {
+                if (!puzzle.get(j).isEmpty() && Integer.parseInt(puzzle.get(i)) > Integer.parseInt(puzzle.get(j))) {
+                    inversions++;
+                }
+            }
+        }
+
+        // If grid width is odd return true if inversion count is even.
+        // If grid width is even return true if inversion count is even and the blank is on an odd row from the bottom
+        return (inversions % 2 == 0) == (emptyRow % 2 != 0);
+    }
+
 }
