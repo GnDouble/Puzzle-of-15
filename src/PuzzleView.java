@@ -37,7 +37,15 @@ public class PuzzleView extends JFrame {
                 }
             }
         }
-        return null; // Should not happen if label is always valid
+        return null; 
     }
+
+
+    public void updateView() {
+        
+        throw new UnsupportedOperationException("Unimplemented method 'updateView'");
+    }
+
+    
 
 }

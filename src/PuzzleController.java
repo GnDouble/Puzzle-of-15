@@ -20,6 +20,10 @@ public class PuzzleController {
                         String label = ((JButton) ev.getSource()).getText();
                         Tuple<Integer, Integer> currentPosition = view.getButtonPosition(label);
                         Tuple<Integer, Integer> emptyPosition = model.getEmptyCellPosition();
+                        if (PuzzleModel.validSwap(currentPosition, emptyPosition)) {
+                            model.swapWithEmptyCell(currentPosition);
+                            view.updateView();
+                        }
                         System.out.println("Button pressed: " + label + " at coordinate: " + currentPosition);
                         System.out.println("Empty cell at coordinate: " + emptyPosition);
             
@@ -28,4 +32,7 @@ public class PuzzleController {
             }
         }
     }
+
+    
+    
 }

@@ -54,9 +54,25 @@ public class PuzzleModel {
         for (int i = 1; i <= 15; i++) {
             numsList.add(Integer.toString(i));
         }
-        numsList.add(""); 
+        numsList.add("");
         Collections.shuffle(numsList, new Random());
-
         return numsList;
     }
+
+    public void swapWithEmptyCell(Tuple<Integer, Integer> currentPosition) {
+        currentPosition = emptyCell;
+        emptyCell = new Tuple<Integer, Integer>(currentPosition.getFirst(), currentPosition.getSecond());
+    }
+
+    public static boolean validSwap(Tuple<Integer, Integer> pos1, Tuple<Integer, Integer> pos2) {
+
+        int row1 = pos1.getFirst();
+        int col1 = pos1.getSecond();
+        int row2 = pos2.getFirst();
+        int col2 = pos2.getSecond();
+
+        return (Math.abs(row1 - row2) == 1 && col1 == col2) ||
+        (Math.abs(col1 - col2) == 1 && row1 == row2);
+    }
+    
 }
