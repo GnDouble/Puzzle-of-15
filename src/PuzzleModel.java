@@ -1,3 +1,4 @@
+// PuzzleModel.java
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
@@ -9,50 +10,50 @@ import javax.swing.JButton;
 public class PuzzleModel {
     private List<String> lShuffle;
     private JButton[][] buttons;
-    private Tuple emptyCell;
-    private PuzzleView puzzleView;
+    private Tuple<Integer,Integer> emptyCell;
+    private int moves = 0;
 
     public PuzzleModel() {
         lShuffle = numShuffle();
         buttons = new JButton[4][4];
         initializeButtons();
-        findEmptyCell();
     }
 
-    private void initializeButtons() {
+    public int getMoves() {
+        return moves;
+    }
+
+    public void restartGame() {
+        lShuffle = numShuffle();
+        initializeButtons();
+        moves = 0;
+    }
+
+    private void initializeButtons() { // filling Buttons with random values
         int i = 0;
         for (int row = 0; row < 4; row++) {
             for (int col = 0; col < 4; col++) {
                 String label = (i < lShuffle.size()) ? lShuffle.get(i) : "";
                 JButton b = new JButton(label);
                 buttons[row][col] = b;
+                if(label.isEmpty()) emptyCell = new Tuple<>(row, col);
                 i++;
             }
         }
     }
 
-    private void findEmptyCell() {
-        for (int row = 0; row < buttons.length; row++) {
-            for (int col = 0; col < buttons[row].length; col++) {
-                if (buttons[row][col].getText().isEmpty()) {
-                    emptyCell = new Tuple(row, col);
-                    return;
-                }
-            }
-        }
-    }
 
     public JButton[][] getButtons() {
         return buttons;
     }
 
-    public Tuple getEmptyCellPosition() {
+    public Tuple<Integer, Integer> getEmptyCellPosition() {
         return emptyCell;
     }
 
     public static List<String> numShuffle() {
         List<String> numsList = new ArrayList<>();
-        for (int i = 1; i <= 15; i++) {
+        for (int i = 1; i < 16; i++) {
             numsList.add(Integer.toString(i));
         }
         numsList.add("");
@@ -60,7 +61,7 @@ public class PuzzleModel {
         return numsList;
     }
 
-    public void swapWithEmptyCell(Tuple currentPosition) {
+    public void swapWithEmptyCell(Tuple<Integer, Integer> currentPosition) {
         int currentRow = currentPosition.getFirst();
         int currentCol = currentPosition.getSecond();
 
@@ -74,9 +75,10 @@ public class PuzzleModel {
 
         // Update the empty cell position
         emptyCell = currentPosition;
+        moves++;
     }
 
-    public static boolean validSwap(Tuple pos1, Tuple pos2) {
+    public boolean validSwap(Tuple<Integer, Integer> pos1, Tuple<Integer, Integer> pos2) {
         int row1 = pos1.getFirst();
         int col1 = pos1.getSecond();
         int row2 = pos2.getFirst();
@@ -85,7 +87,6 @@ public class PuzzleModel {
         return (Math.abs(row1 - row2) == 1 && col1 == col2) ||
                (Math.abs(col1 - col2) == 1 && row1 == row2);
     }
-
     public static Map<Integer, Tuple<Integer, Integer>> getWinCoordinates() {
         Map<Integer, Tuple<Integer, Integer>> winCoords = new HashMap<>();
         winCoords.put(1, new Tuple<>(0, 0));
@@ -106,9 +107,4 @@ public class PuzzleModel {
         winCoords.put(16, new Tuple<>(3, 3));
         return winCoords;
     }
-
-    
 }
-
-
-
