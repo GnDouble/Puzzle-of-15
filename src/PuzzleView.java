@@ -15,13 +15,11 @@ public class PuzzleView extends JFrame {
         JPanel tastenpanel = new JPanel(new GridLayout(4, 4, 6, 6));
         JButton[][] buttons = model.getButtons();
 
-        for (int row = 0; row < 4; row++) {
-            for (int col = 0; col < 4; col++) {
-                JButton b = buttons[row][col];
+        for (JButton[] buttonRow : buttons) {
+            for (JButton b : buttonRow) {
                 b.setFont(FONT);
                 b.setForeground(Color.RED);
                 b.setBorderPainted(false);
-                
                 tastenpanel.add(b);
             }
         }
