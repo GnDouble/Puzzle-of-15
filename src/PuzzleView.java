@@ -1,5 +1,6 @@
 import javax.swing.*;
 import java.awt.*;
+import java.util.Map;
 
 public class PuzzleView extends JFrame {
     private PuzzleModel model;
@@ -39,11 +40,33 @@ public class PuzzleView extends JFrame {
 
     public void updateView() {
         JButton[][] buttons = model.getButtons();
+    
+        // Get the winning coordinates from the model
+        Map<Integer, Tuple<Integer, Integer>> winCoords = model.getWinCoordinates();
+    
         for (int row = 0; row < buttons.length; row++) {
             for (int col = 0; col < buttons[row].length; col++) {
-                buttons[row][col].setText(buttons[row][col].getText());
+                JButton button = buttons[row][col];
+                
+                // Get the value of the current button
+                int currentValue;
+                try {
+                    currentValue = Integer.parseInt(button.getText());
+                } catch (NumberFormatException e) {
+                    // If the button is empty, skip to the next button
+                    continue;
+                }
+    
+                // Check if the current button is at the correct position
+                Tuple<Integer, Integer> winPos = winCoords.get(currentValue);
+                if (winPos != null && winPos.getFirst() == row && winPos.getSecond() == col) {
+                    button.setForeground(Color.GREEN);
+                } else {
+                    button.setForeground(Color.RED);
+                }
             }
         }
+    
         this.revalidate();
         this.repaint();
     }

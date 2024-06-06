@@ -1,6 +1,8 @@
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Random;
 import javax.swing.JButton;
 
@@ -8,6 +10,7 @@ public class PuzzleModel {
     private List<String> lShuffle;
     private JButton[][] buttons;
     private Tuple emptyCell;
+    private PuzzleView puzzleView;
 
     public PuzzleModel() {
         lShuffle = numShuffle();
@@ -81,6 +84,27 @@ public class PuzzleModel {
 
         return (Math.abs(row1 - row2) == 1 && col1 == col2) ||
                (Math.abs(col1 - col2) == 1 && row1 == row2);
+    }
+
+    public static Map<Integer, Tuple<Integer, Integer>> getWinCoordinates() {
+        Map<Integer, Tuple<Integer, Integer>> winCoords = new HashMap<>();
+        winCoords.put(1, new Tuple<>(0, 0));
+        winCoords.put(2, new Tuple<>(0, 1));
+        winCoords.put(3, new Tuple<>(0, 2));
+        winCoords.put(4, new Tuple<>(0, 3));
+        winCoords.put(5, new Tuple<>(1, 0));
+        winCoords.put(6, new Tuple<>(1, 1));
+        winCoords.put(7, new Tuple<>(1, 2));
+        winCoords.put(8, new Tuple<>(1, 3));
+        winCoords.put(9, new Tuple<>(2, 0));
+        winCoords.put(10, new Tuple<>(2, 1));
+        winCoords.put(11, new Tuple<>(2, 2));
+        winCoords.put(12, new Tuple<>(2, 3));
+        winCoords.put(13, new Tuple<>(3, 0));
+        winCoords.put(14, new Tuple<>(3, 1));
+        winCoords.put(15, new Tuple<>(3, 2));
+        winCoords.put(16, new Tuple<>(3, 3));
+        return winCoords;
     }
 
     

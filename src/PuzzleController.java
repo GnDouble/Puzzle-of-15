@@ -9,6 +9,7 @@ public class PuzzleController {
     public PuzzleController(PuzzleModel model, PuzzleView view) {
         this.model = model;
         this.view = view;
+        view.updateView();
     }
 
     public void handleEvents() {
