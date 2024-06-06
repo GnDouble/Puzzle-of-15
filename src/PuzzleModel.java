@@ -1,11 +1,52 @@
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import java.util.Random;
 
+import javax.swing.JButton;
+
 public class PuzzleModel {
+    private List<String> lShuffle;
+    private JButton[][] buttons;
+    private Tuple<Integer, Integer> emptyCell;
+
+    public PuzzleModel() {
+        lShuffle = numShuffle();
+        buttons = new JButton[4][4];
+        initializeButtons();
+        findEmptyCell();
+    }
+
+    private void initializeButtons() {
+        int i = 0;
+        for (int row = 0; row < 4; row++) {
+            for (int col = 0; col < 4; col++) {
+                String label = (i < lShuffle.size()) ? lShuffle.get(i) : "";
+                JButton b = new JButton(label);
+                buttons[row][col] = b;
+                i++;
+            }
+        }
+    }
+
+    private void findEmptyCell() {
+        for (int row = 0; row < buttons.length; row++) {
+            for (int col = 0; col < buttons[row].length; col++) {
+                if (buttons[row][col].getText().isEmpty()) {
+                    emptyCell = new Tuple<>(row, col);
+                    return;
+                }
+            }
+        }
+    }
+
+    public JButton[][] getButtons() {
+        return buttons;
+    }
+
+    public Tuple<Integer, Integer> getEmptyCellPosition() {
+        return emptyCell;
+    }
 
     public static List<String> numShuffle() {
         List<String> numsList = new ArrayList<>();
@@ -13,37 +54,9 @@ public class PuzzleModel {
         for (int i = 1; i <= 15; i++) {
             numsList.add(Integer.toString(i));
         }
-
+        numsList.add(""); 
         Collections.shuffle(numsList, new Random());
 
         return numsList;
     }
-
-    public static Map<Integer, Tuple<Integer, Integer>> winCoordinates() {
-        Map<Integer, Tuple<Integer, Integer>> m = new HashMap<>();
-        m.put(1, new Tuple<>(1, 1));
-        m.put(2, new Tuple<>(1, 2));
-        m.put(3, new Tuple<>(1, 3));
-        m.put(4, new Tuple<>(1, 4));
-        m.put(5, new Tuple<>(2, 1));
-        m.put(6, new Tuple<>(2, 2));
-        m.put(7, new Tuple<>(2, 3));
-        m.put(8, new Tuple<>(2, 4));
-        m.put(9, new Tuple<>(3, 1));
-        m.put(10, new Tuple<>(3, 2));
-        m.put(11, new Tuple<>(3, 3));
-        m.put(12, new Tuple<>(3, 4));
-        m.put(13, new Tuple<>(4, 1));
-        m.put(14, new Tuple<>(4, 2));
-        m.put(15, new Tuple<>(4, 3));
-        return m;
-
-    }
-
-    public static Tuple<Integer, Integer> currentPos(int index) {
-        int row = (index / 4) + 1;
-        int col = (index % 4) + 1;
-        return new Tuple<>(row, col);
-    }
-
 }

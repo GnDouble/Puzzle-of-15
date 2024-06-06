@@ -1,26 +1,31 @@
-import java.util.List;
-import java.util.Map;
-
 import javax.swing.*;
 
 public class PuzzleController {
     private PuzzleModel model;
     private PuzzleView view;
 
-    public PuzzleController (PuzzleModel m, PuzzleView v) {
-        this.model = m;
-        this.view = v;
+    public PuzzleController(PuzzleModel model, PuzzleView view) {
+        this.model = model;
+        this.view = view;
     }
 
     public void handleEvents() {
-        Map<Integer, Tuple<Integer, Integer>> winCoordinates = PuzzleModel.winCoordinates();
+        JButton[][] buttons = this.model.getButtons();
 
-        this.view.getButtons().forEach(button -> button.addActionListener(ev -> {
-            String label = ((JButton) ev.getSource()).getText();
-            Integer buttonNumber = Integer.parseInt(label);
-            Tuple<Integer, Integer> coordinate = winCoordinates.get(buttonNumber);
-
-        }));
-
+        for (int row = 0; row < buttons.length; row++) {
+            for (int col = 0; col < buttons[row].length; col++) {
+                JButton button = buttons[row][col];
+                if (button != null && !button.getText().isEmpty()) {
+                    button.addActionListener(ev -> {
+                        String label = ((JButton) ev.getSource()).getText();
+                        Tuple<Integer, Integer> currentPosition = view.getButtonPosition(label);
+                        Tuple<Integer, Integer> emptyPosition = model.getEmptyCellPosition();
+                        System.out.println("Button pressed: " + label + " at coordinate: " + currentPosition);
+                        System.out.println("Empty cell at coordinate: " + emptyPosition);
+            
+                    });
+                }
+            }
+        }
     }
 }
