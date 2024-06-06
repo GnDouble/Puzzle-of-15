@@ -2,7 +2,6 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Random;
-
 import javax.swing.JButton;
 
 public class PuzzleModel {
@@ -50,7 +49,6 @@ public class PuzzleModel {
 
     public static List<String> numShuffle() {
         List<String> numsList = new ArrayList<>();
-
         for (int i = 1; i <= 15; i++) {
             numsList.add(Integer.toString(i));
         }
@@ -60,19 +58,28 @@ public class PuzzleModel {
     }
 
     public void swapWithEmptyCell(Tuple<Integer, Integer> currentPosition) {
-        currentPosition = emptyCell;
-        emptyCell = new Tuple<Integer, Integer>(currentPosition.getFirst(), currentPosition.getSecond());
+        int currentRow = currentPosition.getFirst();
+        int currentCol = currentPosition.getSecond();
+
+        int emptyRow = emptyCell.getFirst();
+        int emptyCol = emptyCell.getSecond();
+
+        // Swap texts of the buttons
+        String tempText = buttons[currentRow][currentCol].getText();
+        buttons[currentRow][currentCol].setText(buttons[emptyRow][emptyCol].getText());
+        buttons[emptyRow][emptyCol].setText(tempText);
+
+        // Update the empty cell position
+        emptyCell = new Tuple<>(currentRow, currentCol);
     }
 
     public static boolean validSwap(Tuple<Integer, Integer> pos1, Tuple<Integer, Integer> pos2) {
-
         int row1 = pos1.getFirst();
         int col1 = pos1.getSecond();
         int row2 = pos2.getFirst();
         int col2 = pos2.getSecond();
 
         return (Math.abs(row1 - row2) == 1 && col1 == col2) ||
-        (Math.abs(col1 - col2) == 1 && row1 == row2);
+               (Math.abs(col1 - col2) == 1 && row1 == row2);
     }
-    
 }

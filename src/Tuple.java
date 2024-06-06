@@ -17,6 +17,6 @@ public class Tuple<S1, S2> {
     }
 
     public String toString() {
-        return String.format("%d, %d", first,second);
+        return String.format("%d, %d", second,first);
     }
 }

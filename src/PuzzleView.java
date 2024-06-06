@@ -2,7 +2,6 @@ import javax.swing.*;
 import java.awt.*;
 
 public class PuzzleView extends JFrame {
-
     private PuzzleModel model;
     private static final Font FONT = new Font("Eurostile", Font.BOLD, 28);
 
@@ -19,14 +18,12 @@ public class PuzzleView extends JFrame {
             for (JButton b : buttonRow) {
                 b.setFont(FONT);
                 b.setForeground(Color.RED);
-                b.setBorderPainted(false);
                 tastenpanel.add(b);
             }
         }
 
         this.add(tastenpanel, BorderLayout.CENTER);
     }
-
 
     public Tuple<Integer, Integer> getButtonPosition(String label) {
         JButton[][] buttons = model.getButtons();
@@ -37,15 +34,17 @@ public class PuzzleView extends JFrame {
                 }
             }
         }
-        return null; 
+        return null;
     }
-
 
     public void updateView() {
-        
-        throw new UnsupportedOperationException("Unimplemented method 'updateView'");
+        JButton[][] buttons = model.getButtons();
+        for (int row = 0; row < buttons.length; row++) {
+            for (int col = 0; col < buttons[row].length; col++) {
+                buttons[row][col].setText(buttons[row][col].getText());
+            }
+        }
+        this.revalidate();
+        this.repaint();
     }
-
-    
-
 }
