@@ -51,8 +51,7 @@ public class PuzzleView extends JFrame {
                 tastenpanel.add(b);
             }
         }
-        tastenpanel.revalidate();
-        tastenpanel.repaint();
+        
     }
 
     // get current Button Positions
