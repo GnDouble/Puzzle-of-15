@@ -131,8 +131,6 @@ public class PuzzleModel {
             }
         }
 
-        // If grid width is odd return true if inversion count is even.
-        // If grid width is even return true if inversion count is even and the blank is on an odd row from the bottom
         return (inversions % 2 == 0) == (emptyRow % 2 != 0);
     }
 
