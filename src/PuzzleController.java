@@ -8,8 +8,9 @@ public class PuzzleController {
     public PuzzleController(PuzzleModel model, PuzzleView view) {
         this.model = model;
         this.view = view;
-        view.updateView();
         handleEvents();
+        view.updateView();
+        
     }
 
     public void handleEvents() {
@@ -27,7 +28,6 @@ public class PuzzleController {
 
                     if (model.validSwap(currentPosition, emptyPosition)) { //Checking if is possible to swap
                         model.swapWithEmptyCell(currentPosition); //Swapping coordinates
-                        view.updateView(); 
                     }
 
                     System.out.println("Button pressed: " + label + " at coordinate: " + currentPosition); // for debug
@@ -38,7 +38,7 @@ public class PuzzleController {
 
         view.getRestartButton().addActionListener(ev -> {
             model.restartGame();
-            view.updateView();
+           // view.updateView();
             view.getWinImageLabel().setIcon(null);
         });
     }

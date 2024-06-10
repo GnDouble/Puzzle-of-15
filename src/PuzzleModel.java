@@ -127,6 +127,7 @@ public class PuzzleModel {
     }
 
 
+    //logic from https://www.geeksforgeeks.org/check-instance-15-puzzle-solvable/
     public static boolean isSolvable(List<String> puzzle) {
         int inversions = 0;
         int emptyRow = -1;
