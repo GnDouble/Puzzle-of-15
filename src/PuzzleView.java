@@ -24,7 +24,7 @@ public class PuzzleView extends JFrame {
         tastenpanel = new JPanel(new GridLayout(4, 4, 6, 6));
         initializeButtons();
 
-        restartButton = new JButton("Restart");
+        restartButton = new JButton("New Game");
         restartButton.setFont(FONT);
         restartButton.setForeground(Color.BLUE);
 
@@ -54,21 +54,8 @@ public class PuzzleView extends JFrame {
         
     }
 
-    // get current Button Positions
-    public Tuple<Integer, Integer> getButtonPosition(String label) {
-        JButton[][] buttons = model.getButtons();
-        for (int row = 0; row < buttons.length; row++) {
-            for (int col = 0; col < buttons[row].length; col++) {
-                if (buttons[row][col].getText().equals(label)) {
-                    return new Tuple<>(row, col);
-                }
-            }
-        }
-        return null;
-    }
-
+    
     public void updateView() {
-        initializeButtons();
         JButton[][] buttons = model.getButtons();
 
         Map<Integer, Tuple<Integer, Integer>> winCoords = model.getWinCoordinates();
@@ -84,7 +71,7 @@ public class PuzzleView extends JFrame {
                     // If the button is empty skip to the next button
                     continue;
                 }
-
+                
                 // Check if the current button is at the correct position with use of Map from Model
                 Tuple<Integer, Integer> winPos = winCoords.get(currentValue);
                 if (winPos != null && winPos.getFirst() == row && winPos.getSecond() == col) {

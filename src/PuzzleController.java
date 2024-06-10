@@ -22,7 +22,7 @@ public class PuzzleController {
                 button.addActionListener(ev -> {
                     String label = ((JButton) ev.getSource()).getText();
 
-                    Tuple<Integer, Integer> currentPosition = view.getButtonPosition(label);
+                    Tuple<Integer, Integer> currentPosition = model.getButtonPosition(label);
                     Tuple<Integer, Integer> emptyPosition = model.getEmptyCellPosition();
 
                     if (model.validSwap(currentPosition, emptyPosition)) { //Checking if is possible to swap

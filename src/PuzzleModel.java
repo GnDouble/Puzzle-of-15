@@ -93,7 +93,7 @@ public class PuzzleModel {
                (Math.abs(col1 - col2) == 1 && row1 == row2);
     }
 
-    public static Map<Integer, Tuple<Integer, Integer>> getWinCoordinates() {
+    public Map<Integer, Tuple<Integer, Integer>> getWinCoordinates() {
         Map<Integer, Tuple<Integer, Integer>> winCoords = new HashMap<>();
         winCoords.put(1, new Tuple<>(0, 0));
         winCoords.put(2, new Tuple<>(0, 1));
@@ -113,6 +113,19 @@ public class PuzzleModel {
         winCoords.put(16, new Tuple<>(3, 3));
         return winCoords;
     }
+
+    public Tuple<Integer, Integer> getButtonPosition(String label) {
+        JButton[][] buttons = getButtons();
+        for (int row = 0; row < buttons.length; row++) {
+            for (int col = 0; col < buttons[row].length; col++) {
+                if (buttons[row][col].getText().equals(label)) {
+                    return new Tuple<>(row, col);
+                }
+            }
+        }
+        return null;
+    }
+
 
     public static boolean isSolvable(List<String> puzzle) {
         int inversions = 0;
