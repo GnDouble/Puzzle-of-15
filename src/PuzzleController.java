@@ -26,8 +26,9 @@ public class PuzzleController {
                     Tuple<Integer, Integer> currentPosition = model.getButtonPosition(label);
                     Tuple<Integer, Integer> emptyPosition = model.getEmptyCellPosition();
 
-                    if (model.validSwap(currentPosition, emptyPosition)) { //Checking if is possible to swap
-                        model.swapWithEmptyCell(currentPosition); //Swapping coordinates
+                    if (model.validSwap(currentPosition, emptyPosition)) {//Checking if is possible to swap
+                        model.swapWithEmptyCell(currentPosition);
+                        view.updateView(); 
                     }
 
                     System.out.println("Button pressed: " + label + " at coordinate: " + currentPosition); // for debug
@@ -38,7 +39,7 @@ public class PuzzleController {
 
         view.getRestartButton().addActionListener(ev -> {
             model.restartGame();
-           // view.updateView();
+            view.updateView();
             view.getWinImageLabel().setIcon(null);
         });
     }
