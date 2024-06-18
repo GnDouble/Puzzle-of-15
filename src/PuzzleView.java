@@ -36,10 +36,6 @@ public class PuzzleView extends JFrame {
         this.add(bottomPanel, BorderLayout.SOUTH);
 
         buttons = new JButton[4][4]; // Initialize button array
-        initializeButtons();
-    }
-
-    private void initializeButtons() {
         for (int row = 0; row < buttons.length; row++) {
             for (int col = 0; col < buttons[row].length; col++) {
                 buttons[row][col] = new JButton();
@@ -50,16 +46,13 @@ public class PuzzleView extends JFrame {
         }
     }
 
+
     public void updateButtons(String[][] buttonLabels) {
         for (int row = 0; row < buttons.length; row++) {
             for (int col = 0; col < buttons[row].length; col++) {
                 buttons[row][col].setText(buttonLabels[row][col]);
             }
         }
-    }
-
-    public void updateMoves(int moves) {
-        display.setText("Moves: " + moves);
     }
 
     public void updateButtonColors(Map<Integer, Tuple<Integer, Integer>> winCoords) {
@@ -94,6 +87,9 @@ public class PuzzleView extends JFrame {
 
     public JButton[][] getButtons() {
         return buttons;
+    }
+    public void updateMoves(int moves) {
+        display.setText("Moves: " + moves);
     }
 
     public void updateView(PuzzleModel model) {
