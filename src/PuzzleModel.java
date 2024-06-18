@@ -52,6 +52,16 @@ public class PuzzleModel {
         return buttons;
     }
 
+    public String[][] getButtonLabels() {
+        String[][] labels = new String[4][4];
+        for (int row = 0; row < buttons.length; row++) {
+            for (int col = 0; col < buttons[row].length; col++) {
+                labels[row][col] = buttons[row][col].getText();
+            }
+        }
+        return labels;
+    }
+
     public Tuple<Integer, Integer> getEmptyCellPosition() {
         return emptyCell;
     }
@@ -126,9 +136,7 @@ public class PuzzleModel {
         return null;
     }
 
-
-    //logic from https://www.geeksforgeeks.org/check-instance-15-puzzle-solvable/
-    public static boolean isSolvable(List<String> puzzle) {
+    public boolean isSolvable(List<String> puzzle) {
         int inversions = 0;
         int emptyRow = -1;
 
@@ -148,12 +156,10 @@ public class PuzzleModel {
         return (inversions % 2 == 0) == (emptyRow % 2 != 0);
     }
 
-
     public boolean checkWin() {
         JButton[][] buttons = getButtons();
         Map<Integer, Tuple<Integer, Integer>> winCoords = getWinCoordinates();
 
-        // Iterate over each button on the puzzle board
         for (int row = 0; row < buttons.length; row++) {
             for (int col = 0; col < buttons[row].length; col++) {
                 JButton button = buttons[row][col];
@@ -162,14 +168,12 @@ public class PuzzleModel {
                 try {
                     currentValue = Integer.parseInt(button.getText());
                 } catch (NumberFormatException e) {
-                    // If the button is empty, continue to the next button
                     continue;
                 }
 
                 Tuple<Integer, Integer> winPos = winCoords.get(currentValue);
-                
+
                 if (winPos != null && winPos.getFirst() == row && winPos.getSecond() == col) {
-                    // If the button is in its winning position, continue to the next button
                     continue;
                 } else {
                     return false;
@@ -179,5 +183,4 @@ public class PuzzleModel {
 
         return true;
     }
-
 }

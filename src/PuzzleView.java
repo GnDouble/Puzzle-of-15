@@ -3,26 +3,23 @@ import java.awt.*;
 import java.util.Map;
 
 public class PuzzleView extends JFrame {
-    private PuzzleModel model;
     private static final Font FONT = new Font("Eurostile", Font.BOLD, 28);
     private JTextField display;
     private JButton restartButton;
     private JPanel tastenpanel;
     private JLabel winImageLabel;
+    private JButton[][] buttons;
 
-    public PuzzleView(PuzzleModel model) {
+    public PuzzleView() {
         super("Puzzle Spiel");
-        this.model = model;
         this.setSize(600, 600);
         this.setDefaultCloseOperation(EXIT_ON_CLOSE); // Click X to close window
 
         display = new JTextField();
         display.setEditable(false);
-        display.setText("Moves: " + model.getMoves()); // create Display for Moves BorderLayout.South
         display.setForeground(Color.BLACK);
 
         tastenpanel = new JPanel(new GridLayout(4, 4, 6, 6));
-        initializeButtons();
 
         restartButton = new JButton("New Game");
         restartButton.setFont(FONT);
@@ -32,69 +29,80 @@ public class PuzzleView extends JFrame {
         bottomPanel.add(display, BorderLayout.CENTER);
         bottomPanel.add(restartButton, BorderLayout.EAST);
 
-        winImageLabel = new JLabel(); 
+        winImageLabel = new JLabel();
         bottomPanel.add(winImageLabel, BorderLayout.NORTH); // Add winImageLabel to bottomPanel
 
         this.add(tastenpanel, BorderLayout.CENTER);
         this.add(bottomPanel, BorderLayout.SOUTH);
+
+        buttons = new JButton[4][4]; // Initialize button array
+        initializeButtons();
     }
 
     private void initializeButtons() {
-        tastenpanel.removeAll();
-        JButton[][] buttons = model.getButtons();
-
-        // Initialize buttons
-        for (JButton[] buttonRow : buttons) {
-            for (JButton b : buttonRow) {
-                b.setFont(FONT);
-                b.setForeground(Color.RED);
-                tastenpanel.add(b);
-            }
-        }
-        
-    }
-
-    
-    public void updateView() {
-        JButton[][] buttons = model.getButtons();
-
-        Map<Integer, Tuple<Integer, Integer>> winCoords = model.getWinCoordinates();
-
         for (int row = 0; row < buttons.length; row++) {
             for (int col = 0; col < buttons[row].length; col++) {
-                JButton button = buttons[row][col];
+                buttons[row][col] = new JButton();
+                buttons[row][col].setFont(FONT);
+                buttons[row][col].setForeground(Color.RED);
+                tastenpanel.add(buttons[row][col]);
+            }
+        }
+    }
 
-                int currentValue;
-                try {
-                    currentValue = Integer.parseInt(button.getText());
-                } catch (NumberFormatException e) {
-                    // If the button is empty skip to the next button
-                    continue;
-                }
-                
-                // Check if the current button is at the correct position with use of Map from Model
+    public void updateButtons(String[][] buttonLabels) {
+        for (int row = 0; row < buttons.length; row++) {
+            for (int col = 0; col < buttons[row].length; col++) {
+                buttons[row][col].setText(buttonLabels[row][col]);
+            }
+        }
+    }
+
+    public void updateMoves(int moves) {
+        display.setText("Moves: " + moves);
+    }
+
+    public void updateButtonColors(Map<Integer, Tuple<Integer, Integer>> winCoords) {
+        for (int row = 0; row < buttons.length; row++) {
+            for (int col = 0; col < buttons[row].length; col++) {
+                String label = buttons[row][col].getText();
+                if (label.isEmpty()) continue;
+
+                int currentValue = Integer.parseInt(label);
                 Tuple<Integer, Integer> winPos = winCoords.get(currentValue);
                 if (winPos != null && winPos.getFirst() == row && winPos.getSecond() == col) {
-                    button.setForeground(Color.GREEN);
+                    buttons[row][col].setForeground(Color.GREEN);
                 } else {
-                    button.setForeground(Color.RED);
+                    buttons[row][col].setForeground(Color.RED);
                 }
             }
         }
+    }
 
-        display.setText("Moves: " + model.getMoves()); // Update Display for Moves
+    public void showWinImage() {
+        ImageIcon winImageIcon = new ImageIcon("/path/to/image.jpg");
+        winImageLabel.setIcon(winImageIcon);
+    }
 
-        if(model.checkWin()) {
-            ImageIcon winImageIcon = new ImageIcon("/Users/mgenius/VS Proj/GUI Neu/PuzzleGame/src/image/gettyimages-1255091358-2048x2048 2.jpg"); 
-            winImageLabel.setIcon(winImageIcon);
-        }
+    public void clearWinImage() {
+        winImageLabel.setIcon(null);
     }
 
     public JButton getRestartButton() {
         return restartButton;
     }
 
-    public JLabel getWinImageLabel() {
-        return winImageLabel;
+    public JButton[][] getButtons() {
+        return buttons;
+    }
+
+    public void updateView(PuzzleModel model) {
+        updateButtons(model.getButtonLabels());
+        updateMoves(model.getMoves());
+        updateButtonColors(model.getWinCoordinates());
+
+        if (model.checkWin()) {
+            showWinImage();
+        }
     }
 }

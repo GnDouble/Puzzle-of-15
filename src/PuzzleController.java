@@ -1,4 +1,3 @@
-
 import javax.swing.*;
 
 public class PuzzleController {
@@ -9,12 +8,11 @@ public class PuzzleController {
         this.model = model;
         this.view = view;
         handleEvents();
-        view.updateView();
-        
+        view.updateView(model);
     }
 
     public void handleEvents() {
-        JButton[][] buttons = this.model.getButtons();
+        JButton[][] buttons = this.view.getButtons();
 
         for (int row = 0; row < buttons.length; row++) {
             for (int col = 0; col < buttons[row].length; col++) {
@@ -26,9 +24,9 @@ public class PuzzleController {
                     Tuple<Integer, Integer> currentPosition = model.getButtonPosition(label);
                     Tuple<Integer, Integer> emptyPosition = model.getEmptyCellPosition();
 
-                    if (model.validSwap(currentPosition, emptyPosition)) {//Checking if is possible to swap
+                    if (model.validSwap(currentPosition, emptyPosition)) {
                         model.swapWithEmptyCell(currentPosition);
-                        view.updateView(); 
+                        view.updateView(model);
                     }
 
                     System.out.println("Button pressed: " + label + " at coordinate: " + currentPosition); // for debug
@@ -39,8 +37,10 @@ public class PuzzleController {
 
         view.getRestartButton().addActionListener(ev -> {
             model.restartGame();
-            view.updateView();
-            view.getWinImageLabel().setIcon(null);
+            view.updateView(model);
+            view.clearWinImage();
         });
     }
+
+    
 }
