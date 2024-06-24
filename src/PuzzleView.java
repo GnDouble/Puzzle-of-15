@@ -73,7 +73,7 @@ public class PuzzleView extends JFrame {
     }
 
     public void showWinImage() {
-        ImageIcon winImageIcon = new ImageIcon("/path/to/image.jpg");
+        ImageIcon winImageIcon = new ImageIcon("/Users/mgenius/VS Proj/GUI Neu/PuzzleGame/src/image/gettyimages-1255091358-2048x2048 2.jpg");
         winImageLabel.setIcon(winImageIcon);
     }
 
@@ -96,9 +96,12 @@ public class PuzzleView extends JFrame {
         updateButtons(model.getButtonLabels());
         updateMoves(model.getMoves());
         updateButtonColors(model.getWinCoordinates());
-
+    
         if (model.checkWin()) {
+            System.out.println("Player has won!");
             showWinImage();
+        } else {
+            clearWinImage();
         }
     }
 }
