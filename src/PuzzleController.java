@@ -38,6 +38,7 @@ public class PuzzleController {
         view.getRestartButton().addActionListener(ev -> {
             model.restartGame();
             view.updateView(model);
+            view.clearWinImage();
         });
     }
 

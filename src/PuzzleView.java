@@ -100,8 +100,6 @@ public class PuzzleView extends JFrame {
         if (model.checkWin()) {
             System.out.println("Player has won!");
             showWinImage();
-        } else {
-            clearWinImage();
-        }
+        } 
     }
 }
