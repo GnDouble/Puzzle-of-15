@@ -1,6 +1,7 @@
 import javax.swing.*;
 
 public class PuzzleController {
+
     private PuzzleModel model;
     private PuzzleView view;
 
@@ -24,7 +25,7 @@ public class PuzzleController {
                     Tuple<Integer, Integer> currentPosition = model.getButtonPosition(label);
                     Tuple<Integer, Integer> emptyPosition = model.getEmptyCellPosition();
 
-                    if (model.validSwap(currentPosition, emptyPosition)) {
+                    if (currentPosition != null && model.validSwap(currentPosition, emptyPosition)) {
                         model.swapWithEmptyCell(currentPosition);
                         view.updateView(model);
                     }
@@ -35,12 +36,11 @@ public class PuzzleController {
             }
         }
 
+        // Correct handling of the restart button's ActionListener
         view.getRestartButton().addActionListener(ev -> {
             model.restartGame();
             view.updateView(model);
             view.clearWinImage();
         });
     }
-
-    
 }

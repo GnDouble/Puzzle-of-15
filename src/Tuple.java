@@ -15,7 +15,21 @@ public class Tuple<S1, S2> {
         return second;
     }
 
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) return true;
+        if (obj == null || getClass() != obj.getClass()) return false;
+        Tuple<?, ?> tuple = (Tuple<?, ?>) obj;
+        return first == tuple.first && second == tuple.second;
+    }
+
+    @Override
+    public int hashCode() {
+        return 31 * first + second; // Simple hash function
+    }
+
+    @Override
     public String toString() {
-        return String.format("%d, %d", second,first);
+        return String.format("%d, %d", first, second);
     }
 }

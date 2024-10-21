@@ -7,6 +7,7 @@ import java.util.Random;
 import javax.swing.JButton;
 
 public class PuzzleModel {
+
     private List<String> lShuffle;
     private JButton[][] buttons;
     private Tuple<Integer, Integer> emptyCell;
@@ -42,14 +43,12 @@ public class PuzzleModel {
                 } else {
                     buttons[row][col].setText(label);
                 }
-                if (label.isEmpty()) emptyCell = new Tuple<>(row, col);
+                if (label.isEmpty()) {
+                    emptyCell = new Tuple<>(row, col);
+                }
                 i++;
             }
         }
-    }
-
-    public JButton[][] getButtons() {
-        return buttons;
     }
 
     public String[][] getButtonLabels() {
@@ -99,33 +98,19 @@ public class PuzzleModel {
         int row2 = pos2.getFirst();
         int col2 = pos2.getSecond();
 
-        return (Math.abs(row1 - row2) == 1 && col1 == col2) ||
-               (Math.abs(col1 - col2) == 1 && row1 == row2);
+        return (Math.abs(row1 - row2) == 1 && col1 == col2)
+                || (Math.abs(col1 - col2) == 1 && row1 == row2);
     }
 
     public Map<Integer, Tuple<Integer, Integer>> getWinCoordinates() {
         Map<Integer, Tuple<Integer, Integer>> winCoords = new HashMap<>();
-        winCoords.put(1, new Tuple<>(0, 0));
-        winCoords.put(2, new Tuple<>(0, 1));
-        winCoords.put(3, new Tuple<>(0, 2));
-        winCoords.put(4, new Tuple<>(0, 3));
-        winCoords.put(5, new Tuple<>(1, 0));
-        winCoords.put(6, new Tuple<>(1, 1));
-        winCoords.put(7, new Tuple<>(1, 2));
-        winCoords.put(8, new Tuple<>(1, 3));
-        winCoords.put(9, new Tuple<>(2, 0));
-        winCoords.put(10, new Tuple<>(2, 1));
-        winCoords.put(11, new Tuple<>(2, 2));
-        winCoords.put(12, new Tuple<>(2, 3));
-        winCoords.put(13, new Tuple<>(3, 0));
-        winCoords.put(14, new Tuple<>(3, 1));
-        winCoords.put(15, new Tuple<>(3, 2));
-        winCoords.put(16, new Tuple<>(3, 3));
+        for (int i = 1; i <= 16; i++) {
+            winCoords.put(i, new Tuple<>((i - 1) / 4, (i - 1) % 4));
+        }
         return winCoords;
     }
 
     public Tuple<Integer, Integer> getButtonPosition(String label) {
-        JButton[][] buttons = getButtons();
         for (int row = 0; row < buttons.length; row++) {
             for (int col = 0; col < buttons[row].length; col++) {
                 if (buttons[row][col].getText().equals(label)) {
@@ -142,7 +127,7 @@ public class PuzzleModel {
 
         for (int i = 0; i < puzzle.size(); i++) {
             if (puzzle.get(i).isEmpty()) {
-                emptyRow = i / 4;
+                emptyRow = i / 4; // Get row of empty cell
                 continue;
             }
 
@@ -157,7 +142,6 @@ public class PuzzleModel {
     }
 
     public boolean checkWin() {
-        JButton[][] buttons = getButtons();
         Map<Integer, Tuple<Integer, Integer>> winCoords = getWinCoordinates();
 
         for (int row = 0; row < buttons.length; row++) {
@@ -168,7 +152,7 @@ public class PuzzleModel {
                 try {
                     currentValue = Integer.parseInt(button.getText());
                 } catch (NumberFormatException e) {
-                    continue;
+                    continue; // Skip empty buttons
                 }
 
                 Tuple<Integer, Integer> winPos = winCoords.get(currentValue);
